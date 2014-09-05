@@ -1,0 +1,67 @@
+<html>
+    <style>
+    #duk {
+        border: 1px solid grey;
+        cursor: none;
+        background-color: #483A5F;
+    }
+    </style>
+    <body>
+        <canvas id="duk" width="1000" height="600" onmousemove="mouseHandler(event)"></canvas>
+        
+        <script>
+            var c= document.getElementById("duk");
+            var ctx=c.getContext("2d");
+            var xMan = 100, yMan = 200, vxMan=10, vyMan=10;
+            var xMouse = 0, yMouse = 0;
+            
+            function paintMan(x, y){
+                //Måla Huvid
+                ctx.beginPath();
+                ctx.arc(x, y ,20, 0, 2*Math.PI);
+                ctx.fill();
+                
+                //Måla Kropp
+                ctx.fillRect(x-10,y+18,20,40);
+            }
+            
+            function mouseHandler(event){
+                xMouse = event.clientX;
+                yMouse = event.clientY;
+                
+            }
+            
+            function repaint(){
+                ctx.clearRect(0,0,1000,600)
+                //Måla gubbe
+                paintMan(xMan, yMan);
+                
+                ctx.fillRect(50, yMouse, 10, 100);
+                //flytta gubbe
+                xMan=xMan+vxMan;
+                yMan=yMan+vyMan;
+                //Studs i y-led
+                 if(yMan +59> 600){
+                vyMan = -10;
+                }else if (yMan -20< 0){
+                    vyMan = 10;
+                }
+                //studs i x-led
+                if(xMan +20> 1000){
+                    vxMan = -10;
+                }else if(xMan -20< 0){
+                    vxMan = 10;
+                }
+               
+                
+                ctx.fillRect(490,0,10,600)
+            }
+            
+           
+            
+            window.setInterval(repaint,20);
+            
+            
+        </script>
+    </body>
+</html>
